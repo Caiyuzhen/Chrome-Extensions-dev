@@ -1,0 +1,59 @@
+{
+  //清单文件的版本-必填
+  "manifest_version": 3,
+  //插件名称
+  "name": "Focus Mode",
+  //插件描述
+  "description": "Enable reading mode on Chrome's official Extensions and Chrome Web Store documentation.",
+  //插件版本
+  "version": "1.0",
+  //插件基础配置图标
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  //常驻在后台的 js 或后台页面(也就是审查元素那个页面)
+  "background": {
+    "service_worker": "background.js"
+  },
+  //直接注入页面的 JS
+  "content_scripts": [
+    {
+      //正则表达式，匹配到哪个地址才会触发下面的 js css，可以选择为所有
+      // "matches": ["http://*/*", "https://*/*"],
+      //代码注入的时机可以选择为 document_start 或者 document_end 或者 document_idle, 表示在开始、结束还是空闲的时候去注入代码
+      "matches": ["<all_urls>"],
+      "js": ["background.js"],
+      "css": ["content.css"],
+			"run_at": "document_start"
+    }
+  ],
+  //按钮 icon
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    }
+  },
+// 浏览器右上角的图标和内容
+  "browser_action":{
+  "default_icon":"images/icon-16.png",
+  "default_title":"我的插件",
+  "default_popup":"./html/popup.html"
+},
+
+  //申请权限
+  "permissions": ["scripting", "activeTab"],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+U",
+        "mac": "Command+U"
+      }
+    }
+  }
+}
